@@ -27,10 +27,13 @@
 Конфиг-файл Haproxy:
 [haproxy.cfg](https://drive.google.com/file/d/109R_8VDtnbaGJosVZrST9aC9OkovyRD3/view?usp=sharing)
 
+
 http-get
+
 <img width="948" height="356" alt="1" src="https://github.com/user-attachments/assets/0528cf75-c170-4231-9adc-68438648ca0f" />
 
 tcp-get
+
 <img width="953" height="332" alt="2" src="https://github.com/user-attachments/assets/21965181-49d1-4615-94bf-9fa1004c0169" />
 
 
