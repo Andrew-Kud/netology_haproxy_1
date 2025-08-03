@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "`Название занятия`" - `Фамилия и имя студента`
+# Домашнее задание к занятию "`Кластеризация и балансировка нагрузки`" - `Кудряшов Андрей`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -24,50 +24,81 @@
 
 ### Задание 1
 
-`Приведите ответ в свободной форме........`
+Конфиг-файл Haproxy:
+[haproxy.cfg](https://drive.google.com/file/d/109R_8VDtnbaGJosVZrST9aC9OkovyRD3/view?usp=sharing)
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+http-get
+<img width="948" height="356" alt="1" src="https://github.com/user-attachments/assets/0528cf75-c170-4231-9adc-68438648ca0f" />
 
-```
-Поле для вставки кода...
-....
-....
-....
-....
-```
+tcp-get
+<img width="953" height="332" alt="2" src="https://github.com/user-attachments/assets/21965181-49d1-4615-94bf-9fa1004c0169" />
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 1](ссылка на скриншот 1)`
 
 
 ---
 
 ### Задание 2
 
-`Приведите ответ в свободной форме........`
+[haproxy2.cfg](https://drive.google.com/file/d/1V_fjtdAQNPKt5nSnuldj91RzuKFIItY2/view?usp=sharing)
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+Скрипт проверки для example-http.com:
+```
+#!/bin/bash
+
+declare -A count
+count["Server 1 :8888"]=0
+count["Server 2 :9999"]=0
+count["Server 3 :7777"]=0
+
+for i in $(seq 1 100); do
+    output=$(curl -s -H 'Host: example-http.com' http://localhost:8088)
+    if [[ "$output" == "Server 1 :8888" ]]; then
+        count["Server 1 :8888"]=$(( ${count["Server 1 :8888"]} + 1 ))
+    elif [[ "$output" == "Server 2 :9999" ]]; then
+        count["Server 2 :9999"]=$(( ${count["Server 2 :9999"]} + 1 ))
+    elif [[ "$output" == "Server 3 :7777" ]]; then
+        count["Server 3 :7777"]=$(( ${count["Server 3 :7777"]} + 1 ))
+    fi
+done
+
+echo "Results:"
+for server in "${!count[@]}"; do
+    echo "$server: ${count[$server]} times"
+done
+```
+
+<img width="949" height="369" alt="3" src="https://github.com/user-attachments/assets/1474013a-6f80-4a10-bb52-42471dc78223" />
+
+
+Скрипт проверки для http://localhost:8088
+```
+#!/bin/bash
+
+declare -A count
+count["Server 1 :8888"]=0
+count["Server 2 :9999"]=0
+count["Server 3 :7777"]=0
+
+for i in $(seq 1 100); do
+    output=$(curl -s http://localhost:8088)
+    if [[ "$output" == "Server 1 :8888" ]]; then
+        count["Server 1 :8888"]=$(( ${count["Server 1 :8888"]} + 1 ))
+    elif [[ "$output" == "Server 2 :9999" ]]; then
+        count["Server 2 :9999"]=$(( ${count["Server 2 :9999"]} + 1 ))
+    elif [[ "$output" == "Server 3 :7777" ]]; then
+        count["Server 3 :7777"]=$(( ${count["Server 3 :7777"]} + 1 ))
+    fi
+done
+
+echo "Results:"
+for server in "${!count[@]}"; do
+    echo "$server: ${count[$server]} times"
+done
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
-```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 2](ссылка на скриншот 2)`
+<img width="954" height="518" alt="4" src="https://github.com/user-attachments/assets/9c7ffa1b-0c56-4530-87d7-3ed490b5aad9" />
+
 
 
 ---
